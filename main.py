@@ -26,6 +26,22 @@ def afficher_automate(automate):
     for transition in automate['transitions']:
         print(transition)
 
+#STANDARDISATION :
+
+def est_standard(automate):
+    if len(automate['etats_initiaux']) != 1:
+        return False
+
+    etat_initial = automate['etats_initiaux'][0]
+
+    for transition in automate['transitions']:
+        etat_source, _, etat_destination = transition #on utilise pas le symbole donc on met un _ pour le symboliser
+        if etat_destination == etat_initial:
+            return False
+
+    return True
+
+
 def standardisation(automate):
     if len(automate['etats_initiaux']) > 1:
         nouvel_etat_initial = automate['nb_etats']
@@ -48,6 +64,37 @@ def standardisation(automate):
 
     return automate
 
+#DETERMINISATION :
+
+
+def est_deterministe(automate):
+    if len(automate['etats_initiaux']) != 1:
+        return False
+
+    transitions = {}
+    for transition in automate['transitions']:
+        etat_source, symbole, etat_destination = transition
+        if (etat_source, symbole) in transitions:
+            return False
+        transitions[(etat_source, symbole)] = etat_destination
+
+    return True
+
+#COMPLETION
+
+def est_complet(automate):
+    alphabet = automate['alphabet']
+    etats = []
+    for transition in automate['transitions']:
+        etat_source, _, _ = transition
+        if etat_source not in etats:
+            etats.append(etat_source)
+    for etat in etats:
+        symboles_sortants = {transition[1] for transition in automate['transitions'] if transition[0] == etat}
+        if len(symboles_sortants) < len(alphabet):
+            return False
+    return True
+
 
 def main():
     # Lecture de l'automate depuis un fichier
@@ -56,6 +103,11 @@ def main():
     # Affichage de l'automate
     afficher_automate(automate)
     # Vérification si l'automate est déterministe, complet, etc.
+    print("L'automate est standard :", est_standard(automate))
+    print("L'automate est deterministe :", est_deterministe(automate))
+    print("L'automate est complet :", est_complet(automate))
+
+
 
     if input("Voulez-vous le standardiser ? (oui/non) : ").lower() == "oui":
         standardisation(automate)
