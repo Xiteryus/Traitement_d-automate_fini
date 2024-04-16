@@ -43,25 +43,25 @@ def est_standard(automate):
 
 
 def standardisation(automate):
-    if len(automate['etats_initiaux']) > 1:
-        nouvel_etat_initial = automate['nb_etats']
+    if est_standard(automate) == False :
+        nouvel_etat_initial = str(automate['nb_etats'])
         automate['nb_etats'] += 1
         nouvelles_transitions = []
         for i in automate['etats_initiaux']:
-
             for transition in automate['transitions']:
                 etat_depart, symbole, etat_arrivee = transition
-                print(repr(etat_depart), type(etat_depart))
-                print(repr(i), type(i))
                 if etat_depart == i:
                     # Ajouter une nouvelle transition vers l'ancien état d'arrivée
                     nouvelles_transitions.append((nouvel_etat_initial, symbole, etat_arrivee))
-                    print('a')
-
+            #Test si l'automate reconnait le mot vide
+            if i in automate['etats_terminaux']:
+                test_vide = True
+        # Ajout du nouveau etat final si le mot vide est reconnu
+        if test_vide == True:
+            automate['etats_terminaux'].extend([nouvel_etat_initial])
         # Ajouter les nouvelles transitions à l'ensemble des transitions
         automate['transitions'].extend(nouvelles_transitions)
         automate['etats_initiaux'] = [nouvel_etat_initial]
-
     return automate
 
 #DETERMINISATION :
@@ -80,22 +80,60 @@ def est_deterministe(automate):
 
     return True
 
+
+def Determinisation(automate):
+
+
+
+
+    return automate
+
+
 #COMPLETION
 
 def est_complet(automate):
-    alphabet = automate['alphabet']
-    etats = []
+    transitions = {}
     for transition in automate['transitions']:
-        etat_source, _, _ = transition
-        if etat_source not in etats:
-            etats.append(etat_source)
-    for etat in etats:
-        symboles_sortants = {transition[1] for transition in automate['transitions'] if transition[0] == etat}
-        if len(symboles_sortants) < len(alphabet):
-            return False
+        etat_depart, symbole, etat_arrivee = transition
+        transitions[(etat_depart, symbole)] = etat_arrivee
+    for etat in range(automate['nb_etats']):
+        for symbole in automate['alphabet']:
+            if (etat, symbole) not in transitions:
+                return False
     return True
 
+def completion(automate):
+    etat_poubelle = str(automate['nb_etats'])
+    automate['nb_etats'] += 1
 
+    nouvelles_transitions = []
+
+    for etat in range(automate['nb_etats']):
+        for lettre in automate['alphabet']:
+            transition_existante = False
+            for transition in automate['transitions']:
+                etat_depart, symbole, etat_arrivee = transition
+                if etat_depart == str(etat) and symbole == lettre:
+                    transition_existante = True
+                    break
+            if not transition_existante:
+                nouvelles_transitions.append((str(etat), lettre, etat_poubelle))
+
+    automate['transitions'].extend(nouvelles_transitions)
+
+    return automate
+
+#Complementaire
+
+def automate_complementaire(automate):
+
+    etats = set(automate['etats_initiaux'] + automate['etats_terminaux'])
+    for transition in automate['transitions']:
+        etats.update([transition[0], transition[2]])
+
+    automate['etats_terminaux'] = list(etats - set(automate['etats_terminaux']))
+
+    return automate
 def main():
     # Lecture de l'automate depuis un fichier
     nom_fichier = "Automates.txt"
@@ -107,11 +145,24 @@ def main():
     print("L'automate est deterministe :", est_deterministe(automate))
     print("L'automate est complet :", est_complet(automate))
 
+    if input("Voulez-vous le complementariser ? (oui/non) : ") == "oui":
+        automate_complementaire(automate)
+        afficher_automate(automate)
 
+    if input("Voulez-vous le determiniser ? (oui/non) : ") == "oui":
+        Determinisation(automate)
+        afficher_automate(automate)
 
-    if input("Voulez-vous le standardiser ? (oui/non) : ").lower() == "oui":
+    if input("Voulez-vous le Completer ? (oui/non) : ") == "oui":
+        completion(automate)
+        afficher_automate(automate)
+
+    if input("Voulez-vous le standardiser ? (oui/non) : ") == "oui":
         standardisation(automate)
         afficher_automate(automate)
+
+
+
 
 if __name__ == "__main__":
     main()
