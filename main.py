@@ -1,3 +1,6 @@
+import os
+
+
 def lire_automate_sur_fichier(nom_fichier):
     automate = {
         'alphabet': [],
@@ -128,7 +131,7 @@ def Determinisation(automate):
             if etat_terminal in etat:
                 automate_deterministe['etats_terminaux'].append(etat)
 
-
+    afficher_automate(automate_deterministe)
     print("L'automate est standard :", est_standard(automate_deterministe))
     print("L'automate est deterministe :", est_deterministe(automate_deterministe))
     print("L'automate est complet :", est_complet(automate_deterministe))
@@ -146,7 +149,7 @@ def est_complet(automate):
         transitions[(etat_depart, symbole)] = etat_arrivee
     for etat in range(automate['nb_etats']):
         for symbole in automate['alphabet']:
-            if (etat, symbole) not in transitions:
+            if (str(etat), symbole) not in transitions:
                 return False
     return True
 
@@ -183,18 +186,51 @@ def automate_complementaire(automate):
 
     return automate
 
+def test_reconnaissance(automate):
+    mot = input("Entrez le mot que vous voulez reconnaître : ")
+    etats_actuels = set(automate['etats_initiaux'])
 
+    for lettre in mot:
+        nouveaux_etats = set()
+
+        for etat in etats_actuels:
+            for transition in automate['transitions']:
+                etat_source, symbole, etat_destination = transition
+                if etat_source == etat and symbole == lettre:
+                    nouveaux_etats.add(etat_destination)
+
+        etats_actuels = nouveaux_etats
+
+    # Vérification si l'un des états actuels est un état terminal
+    for etat in etats_actuels:
+        if etat in automate['etats_terminaux']:
+            print("Le mot est reconnu par l'automate.")
+            return
+
+    print("Le mot n'est pas reconnu par l'automate.")
 
 def main():
     # Lecture de l'automate depuis un fichier
-    nom_fichier = "Test.txt"
-    automate = lire_automate_sur_fichier(nom_fichier)
+    x = True
+    while x == True:
+        a = input("Quel automate voulez-vous sélectionner ? (Tapez 'quitter' pour quitter) ")
+        if a.lower() == 'quitter':
+            return None
+        nom_fichier = a + ".txt"
+        if not os.path.exists(nom_fichier):
+            print("L'automate n'existe pas.")
+        else:
+            automate = lire_automate_sur_fichier(nom_fichier)
+            x = False
     # Affichage de l'automate
     afficher_automate(automate)
+
     # Vérification si l'automate est déterministe, complet, etc.
     print("L'automate est standard :", est_standard(automate))
     print("L'automate est deterministe :", est_deterministe(automate))
     print("L'automate est complet :", est_complet(automate))
+
+    test_reconnaissance(automate)
 
     if input("Voulez-vous le determiniser ? (oui/non) : ") == "oui":
         afficher_automate(Determinisation(automate))
