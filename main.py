@@ -20,12 +20,11 @@ def lire_automate_sur_fichier(nom_fichier):
 def afficher_automate(automate):
     print("Alphabet:", automate['alphabet'])
     print("Nombre d'états:", automate['nb_etats'])
-    print("États initiaux:",  ', '.join(['(' + ', '.join(etat) + ')' for etat in automate['etats_initiaux']]))
-    print("États terminaux:",  ', '.join(['(' + ', '.join(etat) + ')' for etat in automate['etats_terminaux']]))
+    print("États initiaux:", automate['etats_initiaux'])
+    print("États terminaux:", automate['etats_terminaux'])
     print("Transitions:")
     for transition in automate['transitions']:
-        etat_source, symbole, etat_destination = transition
-        print(f"({', '.join(etat_source)})", symbole, f"({', '.join(etat_destination)})")
+        print(transition)
 
 #STANDARDISATION :
 
@@ -188,7 +187,7 @@ def automate_complementaire(automate):
 
 def main():
     # Lecture de l'automate depuis un fichier
-    nom_fichier = "Test1.txt"
+    nom_fichier = "Test.txt"
     automate = lire_automate_sur_fichier(nom_fichier)
     # Affichage de l'automate
     afficher_automate(automate)
