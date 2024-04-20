@@ -201,7 +201,6 @@ def test_reconnaissance(automate):
 
         etats_actuels = nouveaux_etats
 
-    # Vérification si l'un des états actuels est un état terminal
     for etat in etats_actuels:
         if etat in automate['etats_terminaux']:
             print("Le mot est reconnu par l'automate.")
@@ -209,23 +208,66 @@ def test_reconnaissance(automate):
 
     print("Le mot n'est pas reconnu par l'automate.")
 
-def main():
-    # Lecture de l'automate depuis un fichier
+
+
+def selection_automate():
     x = True
+
     while x == True:
-        a = input("Quel automate voulez-vous sélectionner ? (Tapez 'quitter' pour quitter) ")
-        if a.lower() == 'quitter':
-            return None
+        a = input("Quel automate voulez-vous sélectionner (de 01 à 44) ? ")
         nom_fichier = a + ".txt"
         if not os.path.exists(nom_fichier):
             print("L'automate n'existe pas.")
         else:
             automate = lire_automate_sur_fichier(nom_fichier)
             x = False
-    # Affichage de l'automate
-    afficher_automate(automate)
 
-    # Vérification si l'automate est déterministe, complet, etc.
+    return automate
+def main():
+    # Lecture de l'automate depuis un fichier
+    # Affichage de l'automate
+    automate = selection_automate()
+    q = False
+    while not q:
+        print("MENU : ")
+        print("1. Selection d'un autre automate")
+        print("2. Afficher les informations de l'automate")
+        print("3. Rendre l'automate déterministe")
+        print("4. Rendre l'automate complet")
+        print("5. Rendre l'automate standard")
+        print("6. Reconnaissance de mots")
+        print("7. Quitter")
+        choix = input("Entrez votre choix : ")
+        if choix == '1':
+            automate = selection_automate()
+        elif choix == '2':
+            afficher_automate(automate)
+            print("L'automate est standard :", est_standard(automate))
+            print("L'automate est deterministe :", est_deterministe(automate))
+            print("L'automate est complet :", est_complet(automate))
+        elif choix == '3':
+            if est_deterministe(automate):
+                print("L'automate est deja deterministe")
+            else:
+                afficher_automate(Determinisation(automate))
+        elif choix == '4':
+            if est_complet(automate):
+                print("L'automate est deja complet")
+            else:
+                afficher_automate(completion(automate))
+        elif choix == '5':
+            if est_standard(automate):
+                print("L'automate est deja standard")
+            else:
+                afficher_automate(standardisation(automate))
+        elif choix == '6':
+                test_reconnaissance(automate)
+        elif choix == "7":
+            q = True
+        else:
+            print("Choix invalide. Veuillez choisir une option valide.")
+
+'''    # Vérification si l'automate est déterministe, complet, etc.
     print("L'automate est standard :", est_standard(automate))
     print("L'automate est deterministe :", est_deterministe(automate))
     print("L'automate est complet :", est_complet(automate))
@@ -249,7 +291,7 @@ def main():
         standardisation(automate)
         afficher_automate(automate)
 
-
+'''
 
 
 if __name__ == "__main__":
