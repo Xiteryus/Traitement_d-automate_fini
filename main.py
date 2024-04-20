@@ -86,9 +86,6 @@ def est_deterministe(automate):
 
 
 
-
-
-
 def Determinisation(automate):
 
     if len(automate['etats_initiaux']) != 1:
@@ -139,6 +136,9 @@ def Determinisation(automate):
     print("L'automate est standard :", est_standard(automate_deterministe))
     print("L'automate est deterministe :", est_deterministe(automate_deterministe))
     print("L'automate est complet :", est_complet(automate_deterministe))
+
+    if not(est_complet(automate_deterministe)):
+        completion(automate_deterministe)
 
     return automate_deterministe
 
