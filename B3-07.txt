@@ -5,3 +5,43 @@ a
 2
 1 a 1
 1 a 0
+
+Standardisation :
+Alphabet: ['a']
+Nombre d'états: 3
+États initiaux: ['2']
+États terminaux: ['0']
+Transitions:
+('1', 'a', '1')
+('1', 'a', '0')
+('2', 'a', '1')
+('2', 'a', '0')
+
+Determinisation:
+Alphabet: ['a']
+Nombre d'états: 2
+États initiaux: [('2',)]
+États terminaux: [('0', '1')]
+Transitions:
+(('2',), 'a', ('0', '1'))
+(('0', '1'), 'a', ('0', '1'))
+
+Complet:
+Alphabet: ['a']
+Nombre d'états: 3
+États initiaux: ['1']
+États terminaux: ['0']
+Transitions:
+('1', 'a', '1')
+('1', 'a', '0')
+('0', 'a', 'P')
+
+Complementaire :
+Alphabet: ['a']
+Nombre d'états: 3
+États initiaux: ['1']
+États terminaux: ['1', 'P']
+Transitions:
+('1', 'a', '1')
+('1', 'a', '0')
+('0', 'a', 'P')

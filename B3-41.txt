@@ -15,3 +15,26 @@ a b
 4 b P
 P a P
 P b P
+
+L'automate est standard : True
+L'automate est deterministe : True
+L'automate est complet : True
+
+Complémentaire :
+Alphabet: ['a', 'b']
+Nombre d'états: 6
+États initiaux: ['0']
+États terminaux: ['0', 'P']
+Transitions:
+('0', 'a', '1')
+('0', 'b', '4')
+('1', 'a', '2')
+('1', 'b', '3')
+('2', 'a', '2')
+('2', 'b', '3')
+('3', 'a', 'P')
+('3', 'b', 'P')
+('4', 'a', 'P')
+('4', 'b', 'P')
+('P', 'a', 'P')
+('P', 'b', 'P')

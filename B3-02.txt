@@ -4,3 +4,22 @@ a
 0
 1
 0 a 0
+
+Standardisation :
+Alphabet: ['a']
+Nombre d'états: 2
+États initiaux: ['1']
+États terminaux: ['0', '1']
+Transitions:
+('0', 'a', '0')
+('1', 'a', '0')
+L'automate est deterministe : True
+L'automate est complet : True
+
+Complementaire :
+Alphabet: ['a']
+Nombre d'états: 1
+États initiaux: ['0']
+États terminaux: []
+Transitions:
+('0', 'a', '0')

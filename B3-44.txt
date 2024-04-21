@@ -13,3 +13,62 @@ a b
 3 a 2
 3 b 3
 3 b 2
+
+L'automate est standard : True
+L'automate est deterministe : False
+L'automate est complet : False
+
+Determinisation :
+Alphabet: ['a', 'b']
+Nombre d'états: 5
+États initiaux: [('0',)]
+États terminaux: [('2',), ('3',), ('2', '3'), ('2', '3'), ('1', '2')]
+Transitions:
+(('0',), 'a', ('1', '2'))
+(('0',), 'b', ('2',))
+(('2',), 'a', ('3',))
+(('2',), 'b', ('2',))
+(('3',), 'a', ('2', '3'))
+(('3',), 'b', ('2', '3'))
+(('2', '3'), 'a', ('2', '3'))
+(('2', '3'), 'b', ('2', '3'))
+(('2', '3'), 'a', ('2', '3'))
+(('2', '3'), 'b', ('2', '3'))
+(('1', '2'), 'a', ('3',))
+(('1', '2'), 'b', ('2', '3'))
+
+Complet :
+Alphabet: ['a', 'b']
+Nombre d'états: 5
+États initiaux: ['0']
+États terminaux: ['2', '3']
+Transitions:
+('0', 'a', '1')
+('0', 'a', '2')
+('0', 'b', '2')
+('1', 'b', '3')
+('2', 'a', '3')
+('2', 'b', '2')
+('3', 'a', '3')
+('3', 'a', '2')
+('3', 'b', '3')
+('3', 'b', '2')
+('1', 'a', 'P')
+
+Complémentaire :
+Alphabet: ['a', 'b']
+Nombre d'états: 5
+États initiaux: ['0']
+États terminaux: ['0', 'P', '1']
+Transitions:
+('0', 'a', '1')
+('0', 'a', '2')
+('0', 'b', '2')
+('1', 'b', '3')
+('2', 'a', '3')
+('2', 'b', '2')
+('3', 'a', '3')
+('3', 'a', '2')
+('3', 'b', '3')
+('3', 'b', '2')
+('1', 'a', 'P')
