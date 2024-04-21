@@ -29,7 +29,10 @@ def afficher_automate(automate):
     for transition in automate['transitions']:
         print(transition)
 
+
+#----------------------------------------------------------------------------------------------
 #STANDARDISATION :
+#----------------------------------------------------------------------------------------------
 
 def est_standard(automate):
     if len(automate['etats_initiaux']) != 1:
@@ -68,8 +71,10 @@ def standardisation(automate):
         automate['etats_initiaux'] = [nouvel_etat_initial]
     return automate
 
-#DETERMINISATION :
 
+#----------------------------------------------------------------------------------------------
+#DETERMINISATION :
+#----------------------------------------------------------------------------------------------
 
 def est_deterministe(automate):
     if len(automate['etats_initiaux']) != 1:
@@ -132,18 +137,20 @@ def Determinisation(automate):
             if etat_terminal in etat:
                 automate_deterministe['etats_terminaux'].append(etat)
 
-    afficher_automate(automate_deterministe)
-    print("L'automate est standard :", est_standard(automate_deterministe))
-    print("L'automate est deterministe :", est_deterministe(automate_deterministe))
-    print("L'automate est complet :", est_complet(automate_deterministe))
+    #afficher_automate(automate_deterministe)
+    #print("L'automate est standard :", est_standard(automate_deterministe))
+    #print("L'automate est deterministe :", est_deterministe(automate_deterministe))
+    #print("L'automate est complet :", est_complet(automate_deterministe))
 
     if not(est_complet(automate_deterministe)):
         completion(automate_deterministe)
 
     return automate_deterministe
 
+#----------------------------------------------------------------------------------------------
+#COMPLETION :
+#----------------------------------------------------------------------------------------------
 
-#COMPLETION
 def recup_etat(automate):
     etat_dans_automate = []
     for transition in automate['transitions']:
@@ -170,8 +177,6 @@ def est_complet(automate):
     return True
 
 
-
-
 def completion(automate):
     nouvel_etat_initial = 'P'
     automate['nb_etats'] += 1
@@ -193,8 +198,9 @@ def completion(automate):
     automate['transitions'].extend(nouvelles_transitions)
 
     return automate
-
-#Complementaire
+#----------------------------------------------------------------------------------------------
+#Complementaire :
+#----------------------------------------------------------------------------------------------
 
 def automate_complementaire(automate):
 
@@ -230,12 +236,33 @@ def test_reconnaissance(automate):
 
 
 
+#----------------------------------------------------------------------------------------------
+def contient_mot_vide(automate):
+    transitions = automate['transitions']
+    for transition in transitions:
+        if transition[1] == 'E':
+            return True
+    return False
+
+def supprimer_mot_vide(automate):
+    transitions_sans_e = []
+    for transition in automate['transitions']:
+        source, symbole, destination = transition
+        if symbole != 'E':
+            transitions_sans_e.append(transition)
+    nouveau_automate = automate.copy()
+    nouveau_automate['transitions'] = transitions_sans_e
+    return nouveau_automate
+
+
+
+#----------------------------------------------------------------------------------------------
 def selection_automate():
     x = True
 
     while x == True:
         a = input("Quel automate voulez-vous sélectionner (de 01 à 44) ? ")
-        nom_fichier = a + ".txt"
+        nom_fichier = "B3-"+a + ".txt"
         if not os.path.exists(nom_fichier):
             print("L'automate n'existe pas.")
         else:
@@ -249,6 +276,13 @@ def selection_automate():
 def main():
     # Lecture de l'automate depuis un fichier
     # Affichage de l'automate
+
+    #automate = "35.txt"
+    #print("L'automate est standard :", est_standard(automate))
+    #print("L'automate est deterministe :", est_deterministe(automate))
+    #print("L'automate est complet :", est_complet(automate))
+    #print("L'automate contient le mot vite :", contient_mot_vide(automate))
+
     automate = selection_automate()
     q = False
     while not q:
@@ -269,6 +303,9 @@ def main():
             print("L'automate est standard :", est_standard(automate))
             print("L'automate est deterministe :", est_deterministe(automate))
             print("L'automate est complet :", est_complet(automate))
+            print("L'automate contient le mot vite :", contient_mot_vide(automate))
+            afficher_automate(supprimer_mot_vide(automate))
+
         elif choix == '3':
             if est_deterministe(automate):
                 print("L'automate est deja deterministe")
