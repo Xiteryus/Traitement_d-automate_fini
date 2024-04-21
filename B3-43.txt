@@ -9,3 +9,66 @@ a b
 1 a 2
 2 a 2
 2 b 2
+
+L'automate est standard : False
+L'automate est deterministe : False
+L'automate est complet : False
+
+Standardisation :
+Alphabet: ['a', 'b']
+Nombre d'états: 4
+États initiaux: ['3']
+États terminaux: ['2']
+Transitions:
+('0', 'a', '0')
+('0', 'b', '0')
+('0', 'b', '1')
+('1', 'a', '2')
+('2', 'a', '2')
+('2', 'b', '2')
+('3', 'a', '0')
+('3', 'b', '0')
+('3', 'b', '1')
+
+Determinisation :
+Alphabet: ['a', 'b']
+Nombre d'états: 4
+États initiaux: [('0',)]
+États terminaux: [('0', '2'), ('0', '1', '2')]
+Transitions:
+(('0',), 'a', ('0',))
+(('0',), 'b', ('0', '1'))
+(('0', '1'), 'a', ('0', '2'))
+(('0', '1'), 'b', ('0', '1'))
+(('0', '2'), 'a', ('0', '2'))
+(('0', '2'), 'b', ('0', '1', '2'))
+(('0', '1', '2'), 'a', ('0', '2'))
+(('0', '1', '2'), 'b', ('0', '1', '2'))
+
+Complet :
+Alphabet: ['a', 'b']
+Nombre d'états: 4
+États initiaux: ['0']
+États terminaux: ['2']
+Transitions:
+('0', 'a', '0')
+('0', 'b', '0')
+('0', 'b', '1')
+('1', 'a', '2')
+('2', 'a', '2')
+('2', 'b', '2')
+('1', 'b', 'P')
+
+Complémentaire :
+Alphabet: ['a', 'b']
+Nombre d'états: 4
+États initiaux: ['0']
+États terminaux: ['0', 'P', '1']
+Transitions:
+('0', 'a', '0')
+('0', 'b', '0')
+('0', 'b', '1')
+('1', 'a', '2')
+('2', 'a', '2')
+('2', 'b', '2')
+('1', 'b', 'P')

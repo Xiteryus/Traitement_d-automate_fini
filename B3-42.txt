@@ -17,3 +17,74 @@ a b c
 4 a 4
 4 b 4
 4 c 4
+
+L'automate est standard : False
+L'automate est deterministe : True
+L'automate est complet : False
+
+Standardisation :
+Alphabet: ['a', 'b', 'c']
+Nombre d'états: 6
+États initiaux: ['5']
+États terminaux: ['1', '5']
+Transitions:
+('0', 'b', '1')
+('0', 'a', '3')
+('0', 'c', '3')
+('1', 'a', '0')
+('1', 'b', '2')
+('2', 'a', '1')
+('2', 'b', '4')
+('2', 'c', '4')
+('3', 'a', '3')
+('3', 'b', '3')
+('3', 'c', '3')
+('4', 'a', '4')
+('4', 'b', '4')
+('4', 'c', '4')
+('5', 'a', '0')
+('5', 'b', '2')
+
+Complet :
+Alphabet: ['a', 'b', 'c']
+Nombre d'états: 6
+États initiaux: ['1']
+États terminaux: ['1']
+Transitions:
+('0', 'b', '1')
+('0', 'a', '3')
+('0', 'c', '3')
+('1', 'a', '0')
+('1', 'b', '2')
+('2', 'a', '1')
+('2', 'b', '4')
+('2', 'c', '4')
+('3', 'a', '3')
+('3', 'b', '3')
+('3', 'c', '3')
+('4', 'a', '4')
+('4', 'b', '4')
+('4', 'c', '4')
+('1', 'c', 'P')
+
+Complementaire :
+Alphabet: ['a', 'b', 'c']
+Nombre d'états: 6
+États initiaux: ['1']
+États terminaux: ['2', '0', '4', 'P', '3']
+Transitions:
+('0', 'b', '1')
+('0', 'a', '3')
+('0', 'c', '3')
+('1', 'a', '0')
+('1', 'b', '2')
+('2', 'a', '1')
+('2', 'b', '4')
+('2', 'c', '4')
+('3', 'a', '3')
+('3', 'b', '3')
+('3', 'c', '3')
+('4', 'a', '4')
+('4', 'b', '4')
+('4', 'c', '4')
+('1', 'c', 'P')
