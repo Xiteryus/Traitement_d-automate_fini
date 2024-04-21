@@ -10,3 +10,33 @@ a
 4 a 5
 5 a 0
 0 a 4
+
+L'automate est standard : True
+L'automate est deterministe : False
+L'automate est complet : True
+deterministe :
+Alphabet: ['a']
+Nombre d'états: 7
+États initiaux: [('1',)]
+États terminaux: [('3', '5'), ('0', '2'), ('3', '4'), ('0', '3'), ('0', '3')]
+Transitions:
+(('1',), 'a', ('2', '4'))
+(('2', '4'), 'a', ('3', '5'))
+(('3', '5'), 'a', ('0', '2'))
+(('0', '2'), 'a', ('3', '4'))
+(('3', '4'), 'a', ('2', '5'))
+(('2', '5'), 'a', ('0', '3'))
+(('0', '3'), 'a', ('2', '4'))
+complementaire :
+Alphabet: ['a']
+Nombre d'états: 6
+États initiaux: ['1']
+États terminaux: ['1', '5', '2', '4']
+Transitions:
+('1', 'a', '2')
+('1', 'a', '4')
+('2', 'a', '3')
+('3', 'a', '2')
+('4', 'a', '5')
+('5', 'a', '0')
+('0', 'a', '4')
