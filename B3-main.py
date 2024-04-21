@@ -1,8 +1,8 @@
 import os
 
 
-def lire_automate_sur_fichier(nom_fichier):
-    automate = {
+def lire_automate_sur_fichier(nom_fichier): #Création de l'automate
+    automate = { #Initialisation de l'automate dans un dictionnaire
         'alphabet': [],
         'nb_etats': 0,
         'etats_initiaux': [],
@@ -20,7 +20,7 @@ def lire_automate_sur_fichier(nom_fichier):
             automate['transitions'].append(transition)
     return automate
 
-def afficher_automate(automate):
+def afficher_automate(automate): #affichage de l'automate
     print("Alphabet:", automate['alphabet'])
     print("Nombre d'états:", automate['nb_etats'])
     print("États initiaux:", automate['etats_initiaux'])
@@ -35,12 +35,12 @@ def afficher_automate(automate):
 #----------------------------------------------------------------------------------------------
 
 def est_standard(automate):
-    if len(automate['etats_initiaux']) != 1:
+    if len(automate['etats_initiaux']) != 1: #S'il y a plusieurs entrées, l'automate ne peut pas être standard
         return False
 
     etat_initial = automate['etats_initiaux'][0]
 
-    for transition in automate['transitions']:
+    for transition in automate['transitions']: #On parcourt ensuite l'automate pour trouver si etat ne va pas sur l'automate initial
         etat_source, _, etat_destination = transition #on utilise pas le symbole donc on met un _ pour le symboliser
         if etat_destination == etat_initial:
             return False
@@ -80,11 +80,11 @@ def est_deterministe(automate):
     if len(automate['etats_initiaux']) != 1:
         return False
 
-    transitions = {}
+    transitions = {} #initialisation des transitions
     for transition in automate['transitions']:
         etat_source, symbole, etat_destination = transition
-        if (etat_source, symbole) in transitions:
-            return False
+        if (etat_source, symbole) in transitions: #on verifie que l'etat et le symbole ne soient déja dans le dictionnaire
+            return False #si la paire existe, l'automate n'est pas deterministe
         transitions[(etat_source, symbole)] = etat_destination
 
     return True
@@ -93,33 +93,33 @@ def est_deterministe(automate):
 
 def Determinisation(automate):
 
-    if len(automate['etats_initiaux']) != 1:
+    if len(automate['etats_initiaux']) != 1: #Si l'automate à plusieurs entré on standardise
         automate = standardisation(automate)
 
     etats_visites = set()
-    etats_a_traiter = [tuple(automate['etats_initiaux'])]
+    etats_a_traiter = [tuple(automate['etats_initiaux'])] #initialise une liste
 
-    nouveaux_etats = {}
-    nouvelles_transitions = []
+    nouveaux_etats = {} #initialise un dictionnaire
+    nouvelles_transitions = [] #initialise une liste
 
     while etats_a_traiter:
-        etat_courant = etats_a_traiter.pop()
+        etat_courant = etats_a_traiter.pop() #Enleve un état à chaque iteration
         etats_visites.add(etat_courant)
 
         transitions_par_symbole = {}
         for symbole in automate['alphabet']:
             etats_suivants = set()
             for etat in etat_courant:
-                for transition in automate['transitions']:
+                for transition in automate['transitions']: #on parcourt chaque transition
                     if transition[0] == etat and transition[1] == symbole:
                         etats_suivants.add(transition[2])
-            transitions_par_symbole[symbole] = etats_suivants
+            transitions_par_symbole[symbole] = etats_suivants #les etats suivants sont ajoutés au dictionnaire
 
         for symbole, etats_suivants in transitions_par_symbole.items():
             nouvel_etat = tuple(sorted(list(etats_suivants)))
-            nouvelles_transitions.append((etat_courant, symbole, nouvel_etat))
+            nouvelles_transitions.append((etat_courant, symbole, nouvel_etat)) #les nouvelles transitions sont ajoutées à la liste
 
-            if nouvel_etat not in etats_visites:
+            if nouvel_etat not in etats_visites: #si le nouvel état n'est pas traité, il est ajouté dans liste
                 etats_a_traiter.append(nouvel_etat)
 
         nouveaux_etats[etat_courant] = None
@@ -142,7 +142,7 @@ def Determinisation(automate):
     #print("L'automate est deterministe :", est_deterministe(automate_deterministe))
     #print("L'automate est complet :", est_complet(automate_deterministe))
 
-    if not(est_complet(automate_deterministe)):
+    if not(est_complet(automate_deterministe)):#si l'automate n'est pas complet, on le complete
         automate_deterministe = completion(automate_deterministe)
 
     return automate_deterministe
@@ -155,8 +155,8 @@ def recup_etat(automate):
     etat_dans_automate = []
     for transition in automate['transitions']:
         etat_depart, symbole, etat_arrivee = transition
-        if etat_depart not in etat_dans_automate:
-            etat_dans_automate.append(etat_depart)
+        if etat_depart not in etat_dans_automate:#on verifie si l'etat de depart n'est pas present dans la liste
+            etat_dans_automate.append(etat_depart)#on l'ajoute s'il ne l'est pas
         if etat_arrivee not in etat_dans_automate:
             etat_dans_automate.append(etat_arrivee)
     return etat_dans_automate
@@ -167,17 +167,17 @@ def est_complet(automate):
     etat_automate = recup_etat(automate)
     for transition in automate['transitions']:
         etat_depart, symbole, etat_arrivee = transition
-        transitions[(etat_depart, symbole)] = etat_arrivee
+        transitions[(etat_depart, symbole)] = etat_arrivee #on associe l'etat de depart et le symbole à l'etat d'arrivée
     for etat in etat_automate:
         for symbole in automate['alphabet']:
             if (etat, symbole) not in transitions:
-                # S'il manque une transition pour un état donné avec un symbole donné, l'automate n'est pas complet
+                # s'il manque une transition pour un état donné avec un symbole donné, l'automate n'est pas complet
                 return False
     return True
 
 
 def completion(automate):
-    nouvel_etat_initial = 'P'
+    nouvel_etat_initial = 'P' #initialisation de l'etat poubelle
     automate['nb_etats'] += 1
 
     nouvelles_transitions = []
@@ -185,13 +185,13 @@ def completion(automate):
 
     for etat in etat_automate:
         for lettre in automate['alphabet']:
-            transition_existante = False
+            transition_existante = False #transition_existante indique si une transition existe
             for transition in automate['transitions']:
                 etat_depart, symbole, etat_arrivee = transition
                 if etat_depart == str(etat) and symbole == lettre:
                     transition_existante = True
                     break
-            if not transition_existante:
+            if not transition_existante:# il manque une transition, on ajoute donc une transition qu'on relie à l'etat poubelle
                 nouvelles_transitions.append((str(etat), lettre, nouvel_etat_initial))
 
     automate['transitions'].extend(nouvelles_transitions)
@@ -203,11 +203,11 @@ def completion(automate):
 
 def complementaire(automate):
 
-    etats = set(automate['etats_initiaux'] + automate['etats_terminaux'])
+    etats = set(automate['etats_initiaux'] + automate['etats_terminaux']) #ensemble d'etats initiaux et terminaux
     for transition in automate['transitions']:
-        etats.update([transition[0], transition[2]])
+        etats.update([transition[0], transition[2]])#on parcourt les transitions et met à jour l'ensemble en y ajoutant les etats de depart et d'arrivée
 
-    automate['etats_terminaux'] = list(etats - set(automate['etats_terminaux']))
+    automate['etats_terminaux'] = list(etats - set(automate['etats_terminaux']))#on fait la difference entre l'ensemble des etats et les etats terminaux de base
 
     return automate
 
@@ -219,7 +219,7 @@ def test_reconnaissance(automate,mot):
 
     etats_actuels = set(automate['etats_initiaux'])
 
-    for lettre in mot:
+    for lettre in mot:#on boucle pour chaque lettre
         nouveaux_etats = set()
 
         for etat in etats_actuels:
@@ -254,14 +254,14 @@ def test_reconnaissance_automates(mot):
         print("Le mot n'est reconnu dans aucun automate.")
 
 #----------------------------------------------------------------------------------------------
-def contient_mot_vide(automate):
+def contient_mot_vide(automate): #parcourt les transition, s'il'y le mot vide symbolisé par E, alors la fonction retourne True
     transitions = automate['transitions']
     for transition in transitions:
         if transition[1] == 'E':
             return True
     return False
 
-def supprimer_mot_vide(automate):
+def supprimer_mot_vide(automate): #Fonction inutile
     transitions_sans_e = []
     for transition in automate['transitions']:
         source, symbole, destination = transition
@@ -279,9 +279,10 @@ def selection_automate():
     while x == True:
         a = input("Quel automate voulez-vous sélectionner (de 01 à 44) ? ")
         nom_fichier = "B3-"+a + ".txt"
-        if not os.path.exists(nom_fichier):
+        if not os.path.exists(nom_fichier): #si l'automate choisit n'existe pas, on envoie un message d'erreur au lieu de fermer le programme
             print("L'automate n'existe pas.")
         else:
+            # Lire l'automate à partir du fichier
             automate = lire_automate_sur_fichier(nom_fichier)
             x = False
 
