@@ -94,7 +94,7 @@ def est_deterministe(automate):
 def Determinisation(automate):
 
     if len(automate['etats_initiaux']) != 1:
-        standardisation(automate)
+        automate = standardisation(automate)
 
     etats_visites = set()
     etats_a_traiter = [tuple(automate['etats_initiaux'])]
@@ -143,7 +143,7 @@ def Determinisation(automate):
     #print("L'automate est complet :", est_complet(automate_deterministe))
 
     if not(est_complet(automate_deterministe)):
-        completion(automate_deterministe)
+        automate_deterministe = completion(automate_deterministe)
 
     return automate_deterministe
 
@@ -160,7 +160,6 @@ def recup_etat(automate):
         if etat_arrivee not in etat_dans_automate:
             etat_dans_automate.append(etat_arrivee)
     return etat_dans_automate
-
 
 
 def est_complet(automate):
@@ -202,7 +201,7 @@ def completion(automate):
 #Complementaire :
 #----------------------------------------------------------------------------------------------
 
-def automate_complementaire(automate):
+def complementaire(automate):
 
     etats = set(automate['etats_initiaux'] + automate['etats_terminaux'])
     for transition in automate['transitions']:
@@ -212,8 +211,12 @@ def automate_complementaire(automate):
 
     return automate
 
-def test_reconnaissance(automate):
-    mot = input("Entrez le mot que vous voulez reconnaître : ")
+#----------------------------------------------------------------------------------------------
+#test de reconnaissance de mots   :
+#----------------------------------------------------------------------------------------------
+
+def test_reconnaissance(automate,mot):
+
     etats_actuels = set(automate['etats_initiaux'])
 
     for lettre in mot:
@@ -229,12 +232,26 @@ def test_reconnaissance(automate):
 
     for etat in etats_actuels:
         if etat in automate['etats_terminaux']:
-            print("Le mot est reconnu par l'automate.")
-            return
+            return True
 
-    print("Le mot n'est pas reconnu par l'automate.")
+    return False
 
+def test_reconnaissance_automates(mot):
+    list_automates = []
 
+    for i in range(1, 45):
+
+        # Lire l'automate à partir du fichier
+        automate = lire_automate_sur_fichier(f"B3-{i:02d}.txt")
+
+        # Tester la reconnaissance du mot dans l'automate
+        if test_reconnaissance(automate, mot):
+            list_automates.append(i)
+
+    if list_automates:
+        print("Mot reconnu dans les automates :", ', '.join(map(str, list_automates)))
+    else:
+        print("Le mot n'est reconnu dans aucun automate.")
 
 #----------------------------------------------------------------------------------------------
 def contient_mot_vide(automate):
@@ -253,7 +270,6 @@ def supprimer_mot_vide(automate):
     nouveau_automate = automate.copy()
     nouveau_automate['transitions'] = transitions_sans_e
     return nouveau_automate
-
 
 
 #----------------------------------------------------------------------------------------------
@@ -277,13 +293,14 @@ def main():
     # Lecture de l'automate depuis un fichier
     # Affichage de l'automate
 
-    #automate = "35.txt"
+
+
     #print("L'automate est standard :", est_standard(automate))
     #print("L'automate est deterministe :", est_deterministe(automate))
     #print("L'automate est complet :", est_complet(automate))
     #print("L'automate contient le mot vite :", contient_mot_vide(automate))
 
-    automate = selection_automate()
+    a = selection_automate()
     q = False
     while not q:
         print("MENU : ")
@@ -292,40 +309,52 @@ def main():
         print("3. Rendre l'automate déterministe")
         print("4. Rendre l'automate complet")
         print("5. Rendre l'automate standard")
-        print("6. Reconnaissance de mots")
-        print("7. Donner l'automate complementaire")
-        print("7. Quitter")
+        print("6. Reconnaissance de mot dans l'automate selectionne")
+        print("7. Reconnaissance de mot dans tous les automates")
+        print("8. Donner l'automate complementaire")
+        print("9. Quitter")
         choix = input("Entrez votre choix : ")
         if choix == '1':
-            automate = selection_automate()
+            a = selection_automate()
         elif choix == '2':
-            afficher_automate(automate)
-            print("L'automate est standard :", est_standard(automate))
-            print("L'automate est deterministe :", est_deterministe(automate))
-            print("L'automate est complet :", est_complet(automate))
-            print("L'automate contient le mot vite :", contient_mot_vide(automate))
-            afficher_automate(supprimer_mot_vide(automate))
+            afficher_automate(a)
+            print("L'automate est standard :", est_standard(a))
+            print("L'automate est deterministe :", est_deterministe(a))
+            print("L'automate est complet :", est_complet(a))
+            print("L'automate contient le mot vite :", contient_mot_vide(a))
+            afficher_automate(supprimer_mot_vide(a))
 
         elif choix == '3':
-            if est_deterministe(automate):
+            if est_deterministe(a):
                 print("L'automate est deja deterministe")
             else:
-                afficher_automate(Determinisation(automate))
+                a = Determinisation(a)
+                afficher_automate(a)
         elif choix == '4':
-            if est_complet(automate):
+            if est_complet(a):
                 print("L'automate est deja complet")
             else:
-                afficher_automate(completion(automate))
+                a = completion(a)
+                afficher_automate(a)
         elif choix == '5':
-            if est_standard(automate):
+            if est_standard(a):
                 print("L'automate est deja standard")
             else:
-                afficher_automate(standardisation(automate))
+                a = standardisation(a)
+                afficher_automate(a)
         elif choix == '6':
-                test_reconnaissance(automate)
-        elif choix=='7':
-            afficher_automate(automate_complementaire(automate))
-        elif choix == "8":
+                mot = input("Entrez le mot que vous voulez reconnaître : ")
+                if test_reconnaissance(a,mot)==True:
+                    print("Le mot est reconnu par l'automate.")
+                else:
+                    print("Le mot n'est pas reconnu par l'automate.")
+        elif choix == '7':
+                mot = input("Entrez le mot que vous voulez reconnaître : ")
+                test_reconnaissance_automates(mot)
+        elif choix=='8':
+            a = complementaire(a)
+            afficher_automate(a)
+        elif choix == "9":
             q = True
         else:
             print("Choix invalide. Veuillez choisir une option valide.")
