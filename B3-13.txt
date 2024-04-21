@@ -11,3 +11,22 @@ a
 6 a 7
 7 a 0
 0 a 0
+
+L'automate est standard : True
+L'automate est deterministe : True
+L'automate est complet : True
+
+Complementaire :
+Alphabet: ['a']
+Nombre d'états: 8
+États initiaux: ['1']
+États terminaux: ['2', '1']
+Transitions:
+('1', 'a', '2')
+('2', 'a', '3')
+('3', 'a', '4')
+('4', 'a', '5')
+('5', 'a', '6')
+('6', 'a', '7')
+('7', 'a', '0')
+('0', 'a', '0')

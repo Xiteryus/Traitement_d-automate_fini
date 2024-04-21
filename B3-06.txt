@@ -5,3 +5,61 @@ a b
 2
 1 a 2
 3 b 0
+
+Standardisation :
+Alphabet: ['a', 'b']
+Nombre d'états: 5
+États initiaux: ['4']
+États terminaux: ['2', '0']
+Transitions:
+('1', 'a', '2')
+('3', 'b', '0')
+('4', 'a', '2')
+('4', 'b', '0')
+
+Determinisation :
+Alphabet: ['a', 'b']
+Nombre d'états: 6
+États initiaux: ['4']
+États terminaux: ['2', '0']
+Transitions:
+('1', 'a', '2')
+('3', 'b', '0')
+('4', 'a', '2')
+('4', 'b', '0')
+('1', 'b', 'P')
+('2', 'a', 'P')
+('2', 'b', 'P')
+('3', 'a', 'P')
+('0', 'a', 'P')
+('0', 'b', 'P')
+
+Complet :
+Alphabet: ['a', 'b']
+Nombre d'états: 5
+États initiaux: ['1', '3']
+États terminaux: ['2', '0']
+Transitions:
+('1', 'a', '2')
+('3', 'b', '0')
+('1', 'b', 'P')
+('2', 'a', 'P')
+('2', 'b', 'P')
+('3', 'a', 'P')
+('0', 'a', 'P')
+('0', 'b', 'P')
+
+Complementaire :
+Alphabet: ['a', 'b']
+Nombre d'états: 5
+États initiaux: ['1', '3']
+États terminaux: ['3', 'P', '1']
+Transitions:
+('1', 'a', '2')
+('3', 'b', '0')
+('1', 'b', 'P')
+('2', 'a', 'P')
+('2', 'b', 'P')
+('3', 'a', 'P')
+('0', 'a', 'P')
+('0', 'b', 'P')

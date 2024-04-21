@@ -7,3 +7,63 @@ a b c d
 1 a 2
 2 b 3
 3 c 0
+
+Standardisation :
+Alphabet: ['a', 'b', 'c', 'd']
+Nombre d'états: 5
+États initiaux: ['4']
+États terminaux: ['1', '4']
+Transitions:
+('0', 'd', '1')
+('1', 'a', '2')
+('2', 'b', '3')
+('3', 'c', '0')
+('4', 'a', '2')
+
+L'automate est deterministe : True
+
+Complet :
+Alphabet: ['a', 'b', 'c', 'd']
+Nombre d'états: 5
+États initiaux: ['1']
+États terminaux: ['1']
+Transitions:
+('0', 'd', '1')
+('1', 'a', '2')
+('2', 'b', '3')
+('3', 'c', '0')
+('0', 'a', 'P')
+('0', 'b', 'P')
+('0', 'c', 'P')
+('1', 'b', 'P')
+('1', 'c', 'P')
+('1', 'd', 'P')
+('2', 'a', 'P')
+('2', 'c', 'P')
+('2', 'd', 'P')
+('3', 'a', 'P')
+('3', 'b', 'P')
+('3', 'd', 'P')
+
+Complementaire :
+Alphabet: ['a', 'b', 'c', 'd']
+Nombre d'états: 5
+États initiaux: ['1']
+États terminaux: ['0', '3', 'P', '2']
+Transitions:
+('0', 'd', '1')
+('1', 'a', '2')
+('2', 'b', '3')
+('3', 'c', '0')
+('0', 'a', 'P')
+('0', 'b', 'P')
+('0', 'c', 'P')
+('1', 'b', 'P')
+('1', 'c', 'P')
+('1', 'd', 'P')
+('2', 'a', 'P')
+('2', 'c', 'P')
+('2', 'd', 'P')
+('3', 'a', 'P')
+('3', 'b', 'P')
+('3', 'd', 'P')
