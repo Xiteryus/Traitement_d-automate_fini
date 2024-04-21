@@ -4,3 +4,14 @@ a
 
 1
 0 a 1
+
+L'automate est standard : False
+L'automate est deterministe : True
+Complet :
+Alphabet: ['a']
+Nombre d'états: 3
+États initiaux: ['1']
+États terminaux: []
+Transitions:
+('0', 'a', '1')
+('1', 'a', 'P')

@@ -6,3 +6,7 @@ a
 1 a 2
 2 a 0
 0 a 0
+
+L'automate est standard : True
+L'automate est deterministe : True
+L'automate est complet : True
