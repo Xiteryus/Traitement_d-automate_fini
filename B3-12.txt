@@ -37,3 +37,18 @@ Transitions:
 ('1', 'd', 'P')
 ('0', 'a', 'P')
 ('0', 'c', 'P')
+
+Complementaire :
+Alphabet: ['a', 'b', 'c', 'd']
+Nombre d'états: 3
+États initiaux: ['1']
+États terminaux: ['0', 'P']
+Transitions:
+('1', 'a', '1')
+('1', 'c', '0')
+('0', 'b', '0')
+('0', 'd', '1')
+('1', 'b', 'P')
+('1', 'd', 'P')
+('0', 'a', 'P')
+('0', 'c', 'P')

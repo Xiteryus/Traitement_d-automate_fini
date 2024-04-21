@@ -15,3 +15,11 @@ Transitions:
 ('1', 'a', '0')
 L'automate est deterministe : True
 L'automate est complet : True
+
+Complementaire :
+Alphabet: ['a']
+Nombre d'états: 1
+États initiaux: ['0']
+États terminaux: []
+Transitions:
+('0', 'a', '0')

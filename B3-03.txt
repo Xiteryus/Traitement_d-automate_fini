@@ -15,3 +15,12 @@ Nombre d'états: 3
 Transitions:
 ('0', 'a', 'b')
 ('b', 'a', 'P')
+
+Complemetaire :
+Alphabet: ['a']
+Nombre d'états: 3
+États initiaux: ['0']
+États terminaux: ['b', '0', 'P']
+Transitions:
+('0', 'a', 'b')
+('b', 'a', 'P')

@@ -68,3 +68,19 @@ Transitions:
 ('1', 'a', '3')
 ('1', 'a', '2')
 ('1', 'b', 'P')
+
+Complementaire :
+Alphabet: ['a', 'b']
+Nombre d'états: 5
+États initiaux: ['0']
+États terminaux: ['0', '3', 'P', '1']
+Transitions:
+('0', 'b', '3')
+('0', 'a', '2')
+('3', 'a', '3')
+('3', 'b', '3')
+('2', 'b', '0')
+('2', 'a', '1')
+('1', 'a', '3')
+('1', 'a', '2')
+('1', 'b', 'P')

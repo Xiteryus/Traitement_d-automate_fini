@@ -9,3 +9,10 @@ a
 L'automate est standard : True
 L'automate est deterministe : True
 L'automate est complet : True
+
+Complementaire :
+Alphabet: ['a']
+Nombre d'états: 1
+États initiaux: ['0']
+États terminaux: []
+Transitions:

@@ -44,3 +44,20 @@ Transitions:
 ('0', 'b', 'P')
 ('2', 'b', 'P')
 ('4', 'b', 'P')
+
+Complementaire :
+Alphabet: ['a', 'b']
+Nombre d'états: 6
+États initiaux: ['0']
+États terminaux: ['P', '3', '2', '1', '4']
+Transitions:
+('0', 'a', '1')
+('1', 'a', '2')
+('1', 'b', '2')
+('2', 'a', '3')
+('3', 'a', '4')
+('3', 'b', '4')
+('4', 'a', '0')
+('0', 'b', 'P')
+('2', 'b', 'P')
+('4', 'b', 'P')
